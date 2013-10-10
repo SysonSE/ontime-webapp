@@ -34,7 +34,7 @@ require.config({
 require([
   'backbone'
 ], function (Backbone) {
-  // Vettefan vad detta är?
+  // Vettefan vad detta är? Inkluderades i scaffoldingen
   Backbone.history.start();
 
   // Modellen som håller login-data.
@@ -53,6 +53,7 @@ require([
     loginTemplate: _.template($('#login-template').html()),
 
     events: {
+      // TODO byt ut mot css klass
       "click #loginbutton": "login"
     },
 
