@@ -53,8 +53,7 @@ require([
     loginTemplate: _.template($('#login-template').html()),
 
     events: {
-      // TODO byt ut mot css klass
-      "click #loginbutton": "login"
+      "click .btn": "login"
     },
 
     initialize: function(){
