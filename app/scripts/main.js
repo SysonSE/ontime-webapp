@@ -61,10 +61,12 @@ require([
     },
 
     render: function () {
-        // Insertar templaten till den valda containern som är definierad med el.
         // this.model.toJSON() är modellen man skickar in till vyn, se slutet av filen.
-        // Templaten får sedan ut user och password enligt självförklarande syntax i index.html
-        this.$el.html(this.loginTemplate(this.model.toJSON()));
+        var modelAsJSON = this.model.toJSON();
+        // Skicka in modellen till templaten som sedan får ut user och password enligt självförklarande syntax i index.html
+        var template = this.loginTemplate(modelAsJSON);
+        // Insertar templaten till den valda containern som är definierad med el.
+        this.$el.html(template);
     },
 
     login: function() {
