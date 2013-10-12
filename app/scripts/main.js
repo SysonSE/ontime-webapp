@@ -49,7 +49,11 @@ require([
     },
 
     showMain: function() {
-      console.log('WE ARE IN');
+      if (this.loginView) {
+        this.loginView.remove();
+      }
+      this.navigationView = new NavigationView();
+      this.timeReportView = new TimeReportView();
     }
 
   });
@@ -60,6 +64,40 @@ require([
       username: 'test',
       password: 'hej'
     }
+  });
+
+  var NavigationView = Backbone.View.extend({
+
+    el: $('.navigation'),
+
+    navigationTemplate: _.template($('#navigation-template').html()),
+
+    initialize: function(){
+      this.render();
+    },
+
+    render: function () {
+      var template = this.navigationTemplate();
+      this.$el.html(template);
+    },
+
+  });
+
+  var TimeReportView = Backbone.View.extend({
+
+    el: $('.main-container'),
+
+    timeReportTemplate: _.template($('#time-report-template').html()),
+
+    initialize: function(){
+      this.render();
+    },
+
+    render: function () {
+      var template = this.timeReportTemplate();
+      this.$el.html(template);
+    },
+
   });
 
   // Vyn som hanterar logindelen.
@@ -80,12 +118,12 @@ require([
     },
 
     render: function () {
-        // this.model.toJSON() är modellen man skickar in till vyn, se slutet av filen.
-        var modelAsJSON = this.model.toJSON();
-        // Skicka in modellen till templaten som sedan får ut username och password enligt självförklarande syntax i index.html
-        var template = this.loginTemplate(modelAsJSON);
-        // Insertar templaten till den valda containern som är definierad med el.
-        this.$el.html(template);
+      // this.model.toJSON() är modellen man skickar in till vyn, se slutet av filen.
+      var modelAsJSON = this.model.toJSON();
+      // Skicka in modellen till templaten som sedan får ut username och password enligt självförklarande syntax i index.html
+      var template = this.loginTemplate(modelAsJSON);
+      // Insertar templaten till den valda containern som är definierad med el.
+      this.$el.html(template);
     },
 
     setUsername: function(e){
@@ -106,18 +144,18 @@ require([
       var credentials = this.model.toJSON();
 
       $.ajax({
-         url: 'http://ontime-service-staging.herokuapp.com/',
-         dataType: 'jsonp',
-         data: credentials,
-         success: function (data) {
-             console.log(data);
-              if(data.error) {
-                $('.alert-error').text(data.error.text).show();
-              } else { // If not, send them back to the home page
-                window.location.replace('#main');
-              }
-         }
-       });
+        url: 'http://ontime-service-staging.herokuapp.com/',
+        dataType: 'jsonp',
+        data: credentials,
+        success: function (data) {
+          console.log(data);
+          if(data.error) {
+            // $('.alert-error').text(data.error.text).show();
+          } else {
+            window.location.replace('#main');
+          }
+        }
+      });
     }
   });
 
