@@ -34,8 +34,19 @@ require.config({
 require([
   'backbone'
 ], function (Backbone) {
-  // Vettefan vad detta är? Inkluderades i scaffoldingen
-  Backbone.history.start();
+
+  // Routern har hand om navigeringen runt på sidan. Den tar bort/skapar nödvändiga vyer.
+  var ApplicationRouter = Backbone.Router.extend({
+
+    routes: {
+      "": "showLogin",
+    },
+
+    showLogin: function() {
+      this.loginView = new LoginView({model: new Credentials()});
+    }
+
+  });
 
   // Modellen som håller login-data.
   var Credentials = Backbone.Model.extend({
@@ -49,7 +60,7 @@ require([
   var LoginView = Backbone.View.extend({
     // Wrappern som templaten skall hamna i. Skall finnas definierad i HTML:en
     el: $('.login-container'),
-    // Templaten som skall renderas. Ligger definierat som ett script längst ner på sidan
+    // Templaten som skall renderas. Ligger definierat som ett script/template längst ner i index.html.
     loginTemplate: _.template($('#login-template').html()),
 
     events: {
@@ -69,15 +80,39 @@ require([
         this.$el.html(template);
     },
 
-    login: function() {
+    login: function(event) {
+      // preventDefault gör så att eventet(i detta fall knappen) inte submittar någonting
+      event.preventDefault();
+
       var user = this.model.get('user');
       var password = this.model.get('password');
       // Detta funkar inte riktigt. Den uppdaterar inte modellen när man skriver något. Ändrar man defaults funkar det dock.
       alert("Loggat in med " + user + " och password " + password);
-      return false;
+
+      /**var url = '../login';
+      var formValues = this.model.toJSON();
+      $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: formValues,
+            success: function (data) {
+                console.log(["Login request details: ", data]);
+
+                if(data.error) {  // If there is an error, show the error messages
+                    $('.alert-error').text(data.error.text).show();
+                }
+                else { // If not, send them back to the home page
+                    window.location.replace('#');
+                }
+            }
+        });**/
     }
   });
 
-  window.LoginView = new LoginView({model: new Credentials()});
+  // Initialiserar routern som i sin tur skapar vyn och sen rullar appen.
+  var router = new ApplicationRouter($('#'));
+  // Lyssnar på router-events, dvs navigering. Gör så att man kan trycka på t.ex. bakåt-knappen. Måste initialiseras efter routern.
+  Backbone.history.start();
 });
 
