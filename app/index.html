@@ -16,7 +16,7 @@
         <!-- endbuild -->
     </head>
     <body>
-        <div class="container login-container">
+        <div class="container main-container">
 
         </div>
 
@@ -28,10 +28,10 @@
             <form class="well">
                 <legend>Logga in</legend>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Användare" id="user" value="<%- user %>" autofocus="" />
+                    <input type="text" class="form-control username" placeholder="Användare" value="<%- username %>" autofocus="" />
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" id="password" value="<%- password %>" placeholder="Lösenord" />
+                    <input type="password" class="form-control password" value="<%- password %>" placeholder="Lösenord" />
                 </div>
                 <button type="submit" class="btn btn-primary pull-right">Logga in</button><br />
             </form>

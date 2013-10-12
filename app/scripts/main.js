@@ -40,10 +40,16 @@ require([
 
     routes: {
       "": "showLogin",
+      "main": "showMain"
     },
 
     showLogin: function() {
-      this.loginView = new LoginView({model: new Credentials()});
+      var credentials = new Credentials();
+      this.loginView = new LoginView({model: credentials});
+    },
+
+    showMain: function() {
+      console.log('WE ARE IN');
     }
 
   });
@@ -51,20 +57,22 @@ require([
   // Modellen som håller login-data.
   var Credentials = Backbone.Model.extend({
     defaults: {
-      user: '',
-      password: ''
+      username: 'test',
+      password: 'hej'
     }
   });
 
   // Vyn som hanterar logindelen.
   var LoginView = Backbone.View.extend({
     // Wrappern som templaten skall hamna i. Skall finnas definierad i HTML:en
-    el: $('.login-container'),
+    el: $('.main-container'),
     // Templaten som skall renderas. Ligger definierat som ett script/template längst ner i index.html.
     loginTemplate: _.template($('#login-template').html()),
 
     events: {
-      "click .btn": "login"
+      'click .btn': 'login',
+      'change .username' : 'setUsername',
+      'change .password' : 'setPassword'
     },
 
     initialize: function(){
@@ -74,39 +82,42 @@ require([
     render: function () {
         // this.model.toJSON() är modellen man skickar in till vyn, se slutet av filen.
         var modelAsJSON = this.model.toJSON();
-        // Skicka in modellen till templaten som sedan får ut user och password enligt självförklarande syntax i index.html
+        // Skicka in modellen till templaten som sedan får ut username och password enligt självförklarande syntax i index.html
         var template = this.loginTemplate(modelAsJSON);
         // Insertar templaten till den valda containern som är definierad med el.
         this.$el.html(template);
     },
 
+    setUsername: function(e){
+      this.model.set({username: $('.username').val()});
+    },
+
+    setPassword: function(e){
+      this.model.set({password: $('.password').val()});
+    },
+
     login: function(event) {
-      // preventDefault gör så att eventet(i detta fall knappen) inte submittar någonting
+      // preventDefault gör så att eventet(i detta fall knappen) inte submittar formuläret.
       event.preventDefault();
 
-      var user = this.model.get('user');
+      var username = this.model.get('username');
       var password = this.model.get('password');
-      // Detta funkar inte riktigt. Den uppdaterar inte modellen när man skriver något. Ändrar man defaults funkar det dock.
-      alert("Loggat in med " + user + " och password " + password);
 
-      /**var url = '../login';
-      var formValues = this.model.toJSON();
+      var credentials = this.model.toJSON();
+
       $.ajax({
-            url: url,
-            type: 'POST',
-            dataType: "json",
-            data: formValues,
-            success: function (data) {
-                console.log(["Login request details: ", data]);
-
-                if(data.error) {  // If there is an error, show the error messages
-                    $('.alert-error').text(data.error.text).show();
-                }
-                else { // If not, send them back to the home page
-                    window.location.replace('#');
-                }
-            }
-        });**/
+         url: 'http://ontime-service-staging.herokuapp.com/',
+         dataType: 'jsonp',
+         data: credentials,
+         success: function (data) {
+             console.log(data);
+              if(data.error) {
+                $('.alert-error').text(data.error.text).show();
+              } else { // If not, send them back to the home page
+                window.location.replace('#main');
+              }
+         }
+       });
     }
   });
 
