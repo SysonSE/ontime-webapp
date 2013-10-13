@@ -289,7 +289,7 @@ module.exports = function (grunt) {
             },
             'git-commit-build': {
                 command: function(message){
-                    return 'git commit -am"build ' + message+'"'
+                    return 'git commit -am"'+ message +'"'
                 }
             },
             'git-push': {
