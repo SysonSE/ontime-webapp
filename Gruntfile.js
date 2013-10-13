@@ -348,7 +348,9 @@ module.exports = function (grunt) {
         'uglify',
         'copy',
         'rev',
-        'usemin'
+        'usemin',
+        'shell:git-add-dist',
+        'shell:git-commit-build'
     ]);
 
     grunt.registerTask('default', [
