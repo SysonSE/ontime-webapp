@@ -288,7 +288,10 @@ module.exports = function (grunt) {
                 command: 'git add '
             },
             'git-commit-build': {
-                command: 'git commit -am"build"'
+                command: 'git commit -am"build and autopush"'
+            },
+            'git-push': {
+                command: 'git push origin staging'
             }
         }
     });
@@ -350,7 +353,8 @@ module.exports = function (grunt) {
         'rev',
         'usemin',
         'shell:git-add-dist',
-        'shell:git-commit-build'
+        'shell:git-commit-build',
+        'shell:git-push'
     ]);
 
     grunt.registerTask('default', [
