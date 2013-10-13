@@ -289,6 +289,9 @@ module.exports = function (grunt) {
             },
             'git-commit-build': {
                 command: 'git commit -am"build"'
+            },
+            'git-push': {
+                command: 'git push'
             }
         }
     });
@@ -348,9 +351,7 @@ module.exports = function (grunt) {
         'uglify',
         'copy',
         'rev',
-        'usemin',
-        'shell:git-add-dist',
-        'shell:git-commit-build'
+        'usemin'
     ]);
 
     grunt.registerTask('default', [
@@ -361,7 +362,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask('push', function(){
             return grunt.task.run([
-                'build'
+                'build',
+                'shell:git-add-dist',
+                'shell:git-commit-build',
+                'shell:git-push'
             ]);
         });
 };
