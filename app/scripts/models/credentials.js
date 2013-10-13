@@ -1,8 +1,6 @@
 define([
-  'jquery',
-  'underscore',
   'backbone',
-], function($, _, Backbone){
+], function(Backbone){
   'use strict';
 
   // Modellen som håller login-data.
@@ -12,4 +10,6 @@ define([
       password: 'hej'
     }
   });
+
+  return Credentials;
 });
