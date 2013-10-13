@@ -1,6 +1,10 @@
 {
   "name": "webapp",
   "version": "0.0.0",
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  },
   "dependencies": {
       "express": "3.3.8"
   },
@@ -27,10 +31,6 @@
     "grunt-open": "~0.2.0",
     "load-grunt-tasks": "~0.1.0",
     "connect-livereload": "~0.2.0",
-    "time-grunt": "~0.1.1",
-  },
-  "engines": {
-    "node": "0.10.x",
-    "npm": "1.2.x"
+    "time-grunt": "~0.1.1"
   }
 }
