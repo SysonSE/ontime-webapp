@@ -4,8 +4,9 @@ define([
   'backbone',
   'bootstrap/js/collapse',
   'bootstrap/js/transition',
+  'bootstrap/js/dropdown',
   'text!../../templates/navigation-template.html',
-], function($, _, Backbone, Collapse, Transition, navigationTemplate){
+], function($, _, Backbone, Collapse, Transition, Dropdown, navigationTemplate){
   'use strict';
 
   var NavigationView = Backbone.View.extend({
