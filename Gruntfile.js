@@ -285,7 +285,7 @@ module.exports = function (grunt) {
         },
         shell: {
             'git-add-dist': {
-                command: 'git add '
+                command: 'git add .'
             },
             'git-commit-build': {
                 command: function(message){
