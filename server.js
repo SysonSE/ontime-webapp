@@ -4,10 +4,10 @@ var express = require('express'),
 	env = app.get('env');
 
 
-if ('development' === env) {
-	console.log('Eru säker på att du vill köra appen såhär? Kör grunt server eller grunt server:dist istället');
+if ('staging' === env) {
 	app.use(express.logger('dev'));
-	app.use(express.static(__dirname + '/app'));
+	app.use(express.errorHandler());
+	app.use(express.static(__dirname + '/dist'));
 }
 
 if ('production' === env) {
