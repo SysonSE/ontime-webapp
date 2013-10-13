@@ -1,11 +1,12 @@
-/*global $ */
-var app = app || {};
-
-$(function () {
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+], function($, _, Backbone){
   'use strict';
 
   // Vyn som hanterar logindelen.
-  app.LoginView = Backbone.View.extend({
+  var LoginView = Backbone.View.extend({
     // Wrappern som templaten skall hamna i. Skall finnas definierad i HTML:en
     el: $('.main-container'),
     // Templaten som skall renderas. Ligger definierat som ett script/template längst ner i index.html.
@@ -62,3 +63,4 @@ $(function () {
       });
     }
   });
+});
