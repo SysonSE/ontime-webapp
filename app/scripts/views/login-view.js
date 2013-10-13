@@ -15,7 +15,7 @@ define([
     compiledLoginTemplate: _.template(loginTemplate),
 
     events: {
-      'click .btn': 'login',
+      'click .login-btn': 'login',
       'change .username' : 'setUsername',
       'change .password' : 'setPassword'
     },
