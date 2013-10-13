@@ -358,4 +358,10 @@ module.exports = function (grunt) {
         'test',
         'build'
     ]);
+
+    grunt.registerTask('push', function(){
+            return grunt.task.run([
+                'build'
+            ]);
+        });
 };
