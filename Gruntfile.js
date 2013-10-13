@@ -288,7 +288,9 @@ module.exports = function (grunt) {
                 command: 'git add '
             },
             'git-commit-build': {
-                command: 'git commit -am"build"'
+                command: function(message){
+                    return 'git commit -am"build ' + message+'"'
+                }
             },
             'git-push': {
                 command: 'git push'
@@ -360,11 +362,11 @@ module.exports = function (grunt) {
         'build'
     ]);
 
-    grunt.registerTask('push', function(){
+    grunt.registerTask('push', function(message){
             return grunt.task.run([
                 'build',
                 'shell:git-add-dist',
-                'shell:git-commit-build',
+                'shell:git-commit-build:'+message,
                 'shell:git-push'
             ]);
         });
