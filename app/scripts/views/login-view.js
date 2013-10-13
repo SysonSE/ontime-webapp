@@ -1,15 +1,18 @@
-/*global $ */
-var app = app || {};
-
-$(function () {
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  // Använder Require.js text! plugin, så laddas rå text, dvs vår template
+  'text!../../templates/login-template.html',
+], function($, _, Backbone, loginTemplate){
   'use strict';
 
   // Vyn som hanterar logindelen.
-  app.LoginView = Backbone.View.extend({
+  var LoginView = Backbone.View.extend({
     // Wrappern som templaten skall hamna i. Skall finnas definierad i HTML:en
     el: $('.main-container'),
-    // Templaten som skall renderas. Ligger definierat som ett script/template längst ner i index.html.
-    loginTemplate: _.template($('#login-template').html()),
+    // Kompilerar templaten som skall renderas med underscores micro-templating.
+    compiledLoginTemplate: _.template(loginTemplate),
 
     events: {
       'click .btn': 'login',
@@ -25,7 +28,7 @@ $(function () {
       // this.model.toJSON() är modellen man skickar in till vyn, se slutet av filen.
       var modelAsJSON = this.model.toJSON();
       // Skicka in modellen till templaten som sedan får ut username och password enligt självförklarande syntax i index.html
-      var template = this.loginTemplate(modelAsJSON);
+      var template = this.compiledLoginTemplate(modelAsJSON);
       // Insertar templaten till den valda containern som är definierad med el.
       this.$el.html(template);
     },
@@ -62,3 +65,6 @@ $(function () {
       });
     }
   });
+
+  return LoginView;
+});

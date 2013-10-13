@@ -288,10 +288,7 @@ module.exports = function (grunt) {
                 command: 'git add '
             },
             'git-commit-build': {
-                command: 'git commit -am"build and autopush"'
-            },
-            'git-push': {
-                command: 'git push origin staging'
+                command: 'git commit -am"build"'
             }
         }
     });
@@ -351,10 +348,7 @@ module.exports = function (grunt) {
         'uglify',
         'copy',
         'rev',
-        'usemin',
-        'shell:git-add-dist',
-        'shell:git-commit-build',
-        'shell:git-push'
+        'usemin'
     ]);
 
     grunt.registerTask('default', [
