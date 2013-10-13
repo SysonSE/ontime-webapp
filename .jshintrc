@@ -19,4 +19,9 @@
     "trailing": true,
     "smarttabs": true,
     "jquery": true
+    "evil": true,
+    "regexdash": true,
+    "wsh": true,
+    "sub": true,
+    "expr": true
 }
