@@ -1,10 +1,10 @@
 define([
-  'jquery',
-  'underscore',
-  'backbone',
+    'jquery',
+    'underscore',
+    'backbone',
   // Använder Require.js text! plugin, så laddas rå text, dvs vår template
   'text!../../templates/login-template.html',
-], function($, _, Backbone, loginTemplate){
+], function($, _, Backbone, loginTemplate) {
   'use strict';
 
   // Vyn som hanterar logindelen.
@@ -16,15 +16,15 @@ define([
 
     events: {
       'click .login-btn': 'login',
-      'change .username' : 'setUsername',
-      'change .password' : 'setPassword'
+      'change .username': 'setUsername',
+      'change .password': 'setPassword'
     },
 
-    initialize: function(){
+    initialize: function() {
       this.render();
     },
 
-    render: function () {
+    render: function() {
       // this.model.toJSON() är modellen man skickar in till vyn, se slutet av filen.
       var modelAsJSON = this.model.toJSON();
       // Skicka in modellen till templaten som sedan får ut username och password enligt självförklarande syntax i index.html
@@ -33,12 +33,16 @@ define([
       this.$el.html(template);
     },
 
-    setUsername: function(e){
-      this.model.set({username: $('.username').val()});
+    setUsername: function(e) {
+      this.model.set({
+        username: $('.username').val()
+      });
     },
 
-    setPassword: function(e){
-      this.model.set({password: $('.password').val()});
+    setPassword: function(e) {
+      this.model.set({
+        password: $('.password').val()
+      });
     },
 
     login: function(event) {
@@ -48,21 +52,30 @@ define([
       var username = this.model.get('username');
       var password = this.model.get('password');
 
-      var credentials = this.model.toJSON();
-
       $.ajax({
-        url: 'http://ontime-service-staging.herokuapp.com/',
-        dataType: 'jsonp',
-        data: credentials,
-        success: function (data) {
-          console.log(data);
-          if(data.error) {
-            // $('.alert-error').text(data.error.text).show();
-          } else {
-            window.location.replace('#main');
-          }
+        type: 'POST',
+
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('Authorization', this.make_base_auth(username, password));
+        },
+
+        url: 'http://ontime-service-staging.herokuapp.com/login',
+
+        contentType: 'text/plain',
+
+        success: function() {
+          window.location.replace('#main');
+        },
+
+        error: function() {
+
         }
       });
+    },
+    makeBaseAuth: function(username, password) {
+      var tok = user + ':' + password;
+      var hash = btoa(tok);
+      return "Basic " + hash;
     }
   });
 
