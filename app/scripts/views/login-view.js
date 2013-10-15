@@ -52,11 +52,12 @@ define([
       var username = this.model.get('username');
       var password = this.model.get('password');
 
+      var self = this;
       $.ajax({
         type: 'POST',
 
         beforeSend: function(xhr) {
-          xhr.setRequestHeader('Authorization', this.make_base_auth(username, password));
+          xhr.setRequestHeader('Authorization', self.makeBaseAuth(username, password));
         },
 
         url: 'http://ontime-service-staging.herokuapp.com/login',
@@ -73,7 +74,7 @@ define([
       });
     },
     makeBaseAuth: function(username, password) {
-      var tok = user + ':' + password;
+      var tok = username + ':' + password;
       var hash = btoa(tok);
       return "Basic " + hash;
     }
