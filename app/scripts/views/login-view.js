@@ -69,7 +69,7 @@ define([
         },
 
         error: function() {
-
+          window.location.replace('#');
         }
       });
     },
