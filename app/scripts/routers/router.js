@@ -4,8 +4,9 @@ define([
   'backbone',
   '../views/login-view',
   '../views/navigation-view',
+  '../views/container-view',
   '../models/credentials',
-], function($, _, Backbone, LoginView, NavigationView, Credentials){
+], function($, _, Backbone, LoginView, NavigationView, ContainerView, Credentials){
   'use strict';
 
   // Routern har hand om navigeringen runt på sidan. Den tar bort/skapar nödvändiga vyer.
@@ -21,10 +22,8 @@ define([
     },
 
     showMain: function() {
-      if (this.loginView) {
-        this.loginView.remove();
-      }
-      this.navigationView = new NavigationView();
+      var containerView = new ContainerView();
+      containerView.renderLandingPage();
     }
 
   });
