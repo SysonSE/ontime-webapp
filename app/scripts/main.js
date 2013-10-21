@@ -37,7 +37,7 @@ require([
 ], function (Backbone, Router) {
   'use strict';
 
-  var initialize = function() {
+  var initialize = function () {
     // Initialisera routern
     Router.initialize();
   };
